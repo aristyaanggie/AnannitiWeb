@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-heading: 'Playfair Display', ui-serif, Georgia, serif;
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-primary: #1a1a1a;
+    --color-primary-light: #333333;
+    --color-secondary: #8b7355;
+    --color-secondary-light: #a0826d;
+    --color-background: #fafafa;
+    --color-surface: #ffffff;
+    --color-cream: #F5F0E9;
+    --color-border: #e5e5e5;
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #666666;
+    --color-text-muted: #999999;
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-info: #3b82f6;
+    --color-navbar-bg: #0a0a0a;
+    --color-navbar-text: #f5f5f0;
+}
+
+:root {
+    --font-heading: 'Playfair Display', ui-serif, Georgia, serif;
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary: #1a1a1a;
+    --color-primary-light: #333333;
+    --color-secondary: #8b7355;
+    --color-secondary-light: #a0826d;
+    --color-background: #fafafa;
+    --color-surface: #ffffff;
+    --color-cream: #F5F0E9;
+    --color-border: #e5e5e5;
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #666666;
+    --color-text-muted: #999999;
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-info: #3b82f6;
+    --color-navbar-bg: #0a0a0a;
+    --color-navbar-text: #f5f5f0;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+@utility scrollbar-hide {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+p {
+    @apply text-base leading-relaxed;
+}
+
+small {
+    @apply text-sm;
+}
+
+@layer components {
+    a {
+        @apply transition-colors duration-200 ease-out;
+        color: var(--color-primary);
+
+        &:hover {
+            color: var(--color-secondary);
+        }
+
+        &:focus {
+            @apply outline-none ring-2 ring-offset-2;
+            ring-color: var(--color-primary);
+        }
+    }
+}
+
+img {
+    @apply max-w-full h-auto;
+}
+
+button, input, textarea, select {
+    font-family: inherit;
+}
+
+button, [role="button"] {
+    @apply cursor-pointer transition-all duration-200 ease-out;
+
+    &:hover {
+        @apply scale-[1.02];
+    }
+
+    &:active {
+        @apply scale-[0.98];
+    }
+
+    &:focus {
+        @apply outline-none ring-2 ring-offset-2;
+        ring-color: var(--color-primary);
+    }
+
+    &:disabled {
+        @apply opacity-50 cursor-not-allowed;
+        transform: none;
+    }
+}
+
+input, textarea {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+    @apply rounded-md px-3 py-2 transition-colors duration-200 ease-out border;
+
+    &:focus {
+        @apply outline-none;
+        border-color: var(--color-primary);
+    }
+
+    &::placeholder {
+        color: var(--color-text-muted);
+    }
+}
+
+textarea {
+    @apply resize-none;
+}
+
+::selection {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.25s ease-out forwards;
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+.delay-100 {
+    animation-delay: 100ms;
+}
+
+.delay-200 {
+    animation-delay: 200ms;
+}
+
+.delay-300 {
+    animation-delay: 300ms;
+}
+
+.delay-400 {
+    animation-delay: 400ms;
+}
+
+.delay-500 {
+    animation-delay: 500ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-fadeInUp,
+    .animate-fadeIn {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+cd "$(dirname "$0")/public"
+php -c ../php-cli.ini -S 127.0.0.1:${1:-8000} ../vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php
