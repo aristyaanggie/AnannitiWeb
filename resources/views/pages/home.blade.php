@@ -173,11 +173,11 @@
         @if($catalogItems->first())
           @php $first = $catalogItems->first(); @endphp
           <a href="{{ $first->link ?? '#' }}" class="group relative flex flex-col md:row-span-2 overflow-hidden rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] cursor-pointer h-full">
-            <div class="aspect-[3/4] md:aspect-auto flex-1 w-full overflow-hidden bg-gray-100">
-              <img src="{{ asset('storage/' . $first->image) }}" alt="{{ $first->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'" loading="lazy" />
+            <div class="aspect-[3/4] md:aspect-auto flex-1 w-full overflow-hidden bg-[#f5f5f5] relative">
+              <img src="{{ asset('storage/' . $first->image) }}" alt="{{ $first->title }}" class="relative z-10 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'" loading="lazy" />
             </div>
-            <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.92) 6%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.59) 28%, rgba(10,10,10,0.42) 40%, rgba(10,10,10,0.27) 52%, rgba(10,10,10,0.15) 64%, rgba(10,10,10,0.07) 76%, rgba(10,10,10,0.02) 88%, transparent 100%);"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+            <div class="absolute inset-0 pointer-events-none z-20" style="background-image: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.92) 6%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.59) 28%, rgba(10,10,10,0.42) 40%, rgba(10,10,10,0.27) 52%, rgba(10,10,10,0.15) 64%, rgba(10,10,10,0.07) 76%, rgba(10,10,10,0.02) 88%, transparent 100%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-30">
               <h3 class="text-xl md:text-2xl font-bold text-white mb-1">{{ $first->title }}</h3>
               @if($first->subtitle)
                 <p class="text-[13px] text-white/70">{{ $first->subtitle }}</p>
@@ -191,11 +191,11 @@
           <div class="flex flex-col gap-4 md:gap-5 h-full">
             @foreach($catalogItems->slice(1, 2) as $supply)
               <a href="{{ $supply->link ?? '#' }}" class="group relative flex flex-col overflow-hidden rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] cursor-pointer flex-1 h-full">
-                <div class="aspect-[16/9] flex-1 w-full overflow-hidden bg-gray-100">
-                  <img src="{{ asset('storage/' . $supply->image) }}" alt="{{ $supply->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'" loading="lazy" />
+                <div class="aspect-[16/9] flex-1 w-full overflow-hidden bg-[#f5f5f5] relative">
+                  <img src="{{ asset('storage/' . $supply->image) }}" alt="{{ $supply->title }}" class="relative z-10 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'" loading="lazy" />
                 </div>
-                <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.92) 6%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.59) 28%, rgba(10,10,10,0.42) 40%, rgba(10,10,10,0.27) 52%, rgba(10,10,10,0.15) 64%, rgba(10,10,10,0.07) 76%, rgba(10,10,10,0.02) 88%, transparent 100%);"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-5"><h3 class="text-lg font-bold text-white">{{ $supply->title }}</h3>@if($supply->subtitle)<p class="text-[13px] text-white/70">{{ $supply->subtitle }}</p>@endif</div>
+                <div class="absolute inset-0 pointer-events-none z-20" style="background-image: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.92) 6%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.59) 28%, rgba(10,10,10,0.42) 40%, rgba(10,10,10,0.27) 52%, rgba(10,10,10,0.15) 64%, rgba(10,10,10,0.07) 76%, rgba(10,10,10,0.02) 88%, transparent 100%);"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-5 z-30"><h3 class="text-lg font-bold text-white">{{ $supply->title }}</h3>@if($supply->subtitle)<p class="text-[13px] text-white/70">{{ $supply->subtitle }}</p>@endif</div>
               </a>
             @endforeach
           </div>
@@ -204,11 +204,11 @@
         {{-- Remaining items (individual cards) --}}
         @foreach($catalogItems->slice(3) as $supply)
           <a href="{{ $supply->link ?? '#' }}" class="group relative flex flex-col overflow-hidden rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] cursor-pointer h-full">
-            <div class="aspect-[4/3] flex-1 w-full overflow-hidden bg-gray-100">
-              <img src="{{ asset('storage/' . $supply->image) }}" alt="{{ $supply->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'" loading="lazy" />
+            <div class="aspect-[4/3] flex-1 w-full overflow-hidden bg-[#f5f5f5] relative">
+              <img src="{{ asset('storage/' . $supply->image) }}" alt="{{ $supply->title }}" class="relative z-10 w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'" loading="lazy" />
             </div>
-            <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.92) 6%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.59) 28%, rgba(10,10,10,0.42) 40%, rgba(10,10,10,0.27) 52%, rgba(10,10,10,0.15) 64%, rgba(10,10,10,0.07) 76%, rgba(10,10,10,0.02) 88%, transparent 100%);"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-5"><h3 class="text-lg font-bold text-white">{{ $supply->title }}</h3>@if($supply->subtitle)<p class="text-[13px] text-white/70">{{ $supply->subtitle }}</p>@endif</div>
+            <div class="absolute inset-0 pointer-events-none z-20" style="background-image: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.92) 6%, rgba(10,10,10,0.78) 16%, rgba(10,10,10,0.59) 28%, rgba(10,10,10,0.42) 40%, rgba(10,10,10,0.27) 52%, rgba(10,10,10,0.15) 64%, rgba(10,10,10,0.07) 76%, rgba(10,10,10,0.02) 88%, transparent 100%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 z-30"><h3 class="text-lg font-bold text-white">{{ $supply->title }}</h3>@if($supply->subtitle)<p class="text-[13px] text-white/70">{{ $supply->subtitle }}</p>@endif</div>
           </a>
         @endforeach
       </div>
