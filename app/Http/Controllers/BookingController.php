@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Concerns\FormatsWhatsAppNumber;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -51,6 +52,9 @@ class BookingController extends Controller
             'budget.required' => 'Please enter your estimated budget.',
             'email.email' => 'Please enter a valid email address.',
         ]);
+
+        // Save to database
+        Booking::create($validated);
 
         $message = $this->buildWhatsAppMessage($validated);
 

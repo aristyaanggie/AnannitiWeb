@@ -66,6 +66,18 @@
                     Dashboard
                 </a>
 
+                {{-- Shop Orders --}}
+                <a href="{{ route('admin.orders.index') }}" @click="open = false" class="sidebar-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path></svg>
+                    Shop Orders
+                </a>
+
+                {{-- Bookings --}}
+                <a href="{{ route('admin.bookings.index') }}" @click="open = false" class="sidebar-link {{ request()->routeIs('admin.bookings.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path></svg>
+                    Bookings
+                </a>
+
                 {{-- Website Content (Brand Assets) --}}
                 <a href="{{ route('admin.brand-assets.edit') }}" @click="open = false" class="sidebar-link {{ request()->routeIs('admin.brand-assets.*') ? 'active' : '' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5a1.5 1.5 0 0 0 1.5-1.5V5.25a1.5 1.5 0 0 0-1.5-1.5H3.75a1.5 1.5 0 0 0-1.5 1.5v14.25a1.5 1.5 0 0 0 1.5 1.5Zm6-10.5h.008v.008H9.75v-.008Zm0 3h.008v.008H9.75v-.008Zm0 3h.008v.008H9.75v-.008Zm3-6h.008v.008H12.75v-.008Zm0 3h.008v.008H12.75v-.008Zm0 3h.008v.008H12.75v-.008Zm3-6h.008v.008H15.75v-.008Zm0 3h.008v.008H15.75v-.008Zm0 3h.008v.008H15.75v-.008Z"></path></svg>

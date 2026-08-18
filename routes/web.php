@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\AdminPortfolioController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
@@ -21,6 +23,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/shop/{category}', [ShopController::class, 'category'])->name('shop.category');
 Route::get('/shop/product/{slug}', [ShopController::class, 'show'])->name('shop.product');
+Route::post('/shop/order', [ShopController::class, 'storeOrder'])->name('shop.order.store');
 Route::get('/booking', [BookingController::class, 'create'])->name('booking.create');
 Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
@@ -97,5 +100,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/tattoo-supplies/{tattooSupply}/edit', [AdminTattooSupplyController::class, 'edit'])->name('tattoo-supplies.edit');
     Route::put('/tattoo-supplies/{tattooSupply}', [AdminTattooSupplyController::class, 'update'])->name('tattoo-supplies.update');
     Route::delete('/tattoo-supplies/{tattooSupply}', [AdminTattooSupplyController::class, 'destroy'])->name('tattoo-supplies.destroy');
+
+    // Orders & Bookings
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('orders.destroy');
+    Route::post('/orders/{id}/restore', [AdminOrderController::class, 'restore'])->name('orders.restore');
+    Route::delete('/orders/{id}/force', [AdminOrderController::class, 'forceDelete'])->name('orders.force-delete');
+
+    Route::get('/bookings', [AdminBookingController::class, 'index'])->name('bookings.index');
+    Route::delete('/bookings/{booking}', [AdminBookingController::class, 'destroy'])->name('bookings.destroy');
+    Route::post('/bookings/{id}/restore', [AdminBookingController::class, 'restore'])->name('bookings.restore');
+    Route::delete('/bookings/{id}/force', [AdminBookingController::class, 'forceDelete'])->name('bookings.force-delete');
 
 });

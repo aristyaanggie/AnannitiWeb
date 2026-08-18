@@ -1,7 +1,7 @@
 # Project Development Log
 This file tracks the latest state of the project, including recent changes, pending tasks, and established conventions.
 
-## 📅 Last Updated: 2026-08-14 (GitHub Push & UI Fixes)
+## 📅 Last Updated: 2026-08-18 (Database Tracking for Orders & Bookings)
 
 ### 🚨 SYSTEM AUDIT & VERIFICATION STATUS (100% SECURE)
 - **Database Status**: ✅ Verified. The `.env` is solidly locked onto `DB_CONNECTION=mysql` and `DB_DATABASE=ananniti_db`. All migrations have run successfully. No data was lost.
@@ -11,6 +11,9 @@ This file tracks the latest state of the project, including recent changes, pend
 - **System Memory**: ✅ Verified. `.agents/AGENTS.md` is active and will force AI to read this document on every future restart.
 
 ### 📌 Current State & Recent Work
+- **Database Tracking (Orders & Bookings)**: Implemented server-side storage for all incoming shop orders and service bookings. Created `orders` and `bookings` tables. Added `deleted_at` column for Soft Deletes.
+- **Frontend Form Submissions**: Transformed the "Ask via WhatsApp" CTA on the shop detail page from a pure JavaScript redirect to a standard POST `<form>`. This safely stores the inquiry into the database before redirecting the user to WhatsApp, ensuring no data loss.
+- **Admin Panel**: Added "Shop Orders" and "Bookings" pages to the Admin Sidebar. Added time-based filters (This Week, This Month, This Year) with statistic cards. Implemented Soft Deletes with a "Trash" view and a restore functionality.
 - **Version Control**: Successfully initialized the Git repository, added the remote `origin`, and pushed the initial version to GitHub.
 - **Frontend Shop UI**: Refined the "Tattoo Supply" bento grid layout on `home.blade.php`. Swapped `bg-[#1a1a1a]` back to `bg-[#f5f5f5]` and removed paddings (`p-6 pb-6`) on the images, keeping `object-contain`. This ensures product images with gray backgrounds blend seamlessly into the container without showing stark black empty spaces or cropping the image, while keeping the text completely legible on top of the bottom gradient.
 - **Design & Gradients**: Perfected the "Cubic Easing Curve" gradient for all section transitions in the homepage. The transitions now use custom 10-stop gradients with `rgba` values specifically crafted to blend into solid colors without any banding or hard lines.

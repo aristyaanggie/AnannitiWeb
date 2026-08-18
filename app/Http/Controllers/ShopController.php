@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Concerns\FormatsWhatsAppNumber;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 
@@ -92,5 +94,47 @@ class ShopController extends Controller
             'relatedProducts' => $relatedProducts,
             'whatsappNumber' => $whatsappNumber,
         ]);
+    }
+
+    public function storeOrder(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'product_name' => 'required|string',
+            'customer_name' => 'required|string',
+            'customer_country' => 'required|string',
+            'format' => 'nullable|string',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric',
+        ]);
+
+        $validated['total_price'] = $validated['price'] * $validated['quantity'];
+
+        Order::create($validated);
+
+        // Build WhatsApp Message
+        $whatsappNumber = setting('whatsapp', '6281234567890');
+        $whatsappNumber = $this->formatWhatsAppNumber($whatsappNumber);
+
+        $currency = config('ananniti.payment.currency_symbol', 'Rp');
+        $priceFormatted = number_format((float) $validated['price'], 0, ',', '.');
+        
+        $formatText = $validated['format'] ?? 'Standard';
+
+        $message = "━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT INQUIRY\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT\n" .
+                   "{$validated['product_name']}\n" .
+                   "Format: {$formatText}\n" .
+                   "{$currency} {$priceFormatted}\n" .
+                   "Quantity : {$validated['quantity']}\n\n" .
+                   "━━━━━━━━━━━━━━━━━━━━━━\n\nCUSTOMER\n" .
+                   "Name: {$validated['customer_name']}\n" .
+                   "Country: {$validated['customer_country']}\n\n" .
+                   "━━━━━━━━━━━━━━━━━━━━━━\n\nMESSAGE\n" .
+                   "I would like to ask about availability and shipping for this product.\n\n" .
+                   "━━━━━━━━━━━━━━━━━━━━━━\n\nSent from\nAnanniti Tattoo Bali Website";
+
+        $url = 'https://wa.me/' . $whatsappNumber . '?text=' . rawurlencode($message);
+
+        return redirect()->away($url);
     }
 }

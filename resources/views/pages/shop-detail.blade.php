@@ -153,19 +153,29 @@
         </div>
 
         {{-- WhatsApp CTA --}}
-        <div class="flex flex-col sm:flex-row gap-3 mb-8">
-          <a :href="customerName.trim() !== '' && customerCountry.trim() !== '' ? 'https://wa.me/{{ $whatsappNumber }}?text=' + encodeURIComponent('━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT INQUIRY\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT\n{{ addslashes($product->name) }}\n{{ addslashes($product->category->name ?? '') }}\nFormat: ' + getFormatText() + '\n{{ config('ananniti.payment.currency_symbol', 'Rp') }} ' + getFormattedPrice() + '\nQuantity : ' + quantity + '\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nCUSTOMER\nName: ' + customerName + '\nCountry: ' + customerCountry + '\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nMESSAGE\nI would like to ask about availability and shipping for this product.\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nSent from\nAnanniti Tattoo Bali Website') : '#'"
-               @click.prevent="if (customerName.trim() === '' || customerCountry.trim() === '') { return; } window.location.href = 'https://wa.me/{{ $whatsappNumber }}?text=' + encodeURIComponent('━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT INQUIRY\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT\n{{ addslashes($product->name) }}\n{{ addslashes($product->category->name ?? '') }}\nFormat: ' + getFormatText() + '\n{{ config('ananniti.payment.currency_symbol', 'Rp') }} ' + getFormattedPrice() + '\nQuantity : ' + quantity + '\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nCUSTOMER\nName: ' + customerName + '\nCountry: ' + customerCountry + '\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nMESSAGE\nI would like to ask about availability and shipping for this product.\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nSent from\nAnanniti Tattoo Bali Website');"
-               :class="(customerName.trim() === '' || customerCountry.trim() === '') ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''"
-               target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-black text-white text-sm font-medium rounded-lg transition-colors duration-200 hover:bg-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            Ask via WhatsApp
-          </a>
-          <a href="{{ route('shop') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-[#e5e5e5] text-[#1a1a1a] text-sm font-medium rounded-lg transition-colors duration-200 hover:border-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:ring-offset-2">
-            Back to Shop
-          </a>
-        </div>
+        <form action="{{ route('shop.order.store') }}" method="POST" class="w-full" target="_blank">
+          @csrf
+          <input type="hidden" name="product_id" value="{{ $product->id }}">
+          <input type="hidden" name="product_name" value="{{ $product->name }}">
+          <input type="hidden" name="format" :value="selectedFormat === 'individual' ? 'Individual Unit' : 'Standard Package'">
+          <input type="hidden" name="quantity" :value="quantity">
+          <input type="hidden" name="price" :value="getPrice()">
+          <input type="hidden" name="customer_name" :value="customerName">
+          <input type="hidden" name="customer_country" :value="customerCountry">
+          
+          <div class="flex flex-col sm:flex-row gap-3 mb-8">
+            <button type="submit"
+                   :disabled="customerName.trim() === '' || customerCountry.trim() === ''"
+                   :class="(customerName.trim() === '' || customerCountry.trim() === '') ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#1a1a1a] focus:ring-2 focus:ring-black focus:ring-offset-2'"
+                   class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-black text-white text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              Ask via WhatsApp
+            </button>
+            <a href="{{ route('shop') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-[#e5e5e5] text-[#1a1a1a] text-sm font-medium rounded-lg transition-colors duration-200 hover:border-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:ring-offset-2">
+              Back to Shop
+            </a>
+          </div>
+        </form>
 
         {{-- Product Description --}}
         @if($product->description)
