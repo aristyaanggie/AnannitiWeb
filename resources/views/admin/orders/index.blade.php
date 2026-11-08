@@ -61,9 +61,27 @@
                             <td class="px-6 py-4 text-[13px] text-[#666666]">{{ $order->created_at->format('d M Y, H:i') }}</td>
                             <td class="px-6 py-4">
                                 <p class="text-[14px] font-medium text-[#1a1a1a]">{{ $order->customer_name }}</p>
-                                <p class="text-[12px] text-[#999999]">{{ $order->customer_country }}</p>
+                                @if($order->customer_address)
+                                    <p class="text-[12px] text-[#666666] line-clamp-2 max-w-xs mt-1" title="{{ $order->customer_address }}">
+                                        <span class="text-[#999999]">Address:</span> {{ $order->customer_address }}
+                                    </p>
+                                @elseif($order->customer_country)
+                                    <p class="text-[12px] text-[#999999]">{{ $order->customer_country }}</p>
+                                @endif
                             </td>
-                            <td class="px-6 py-4 text-[14px] text-[#1a1a1a]">{{ $order->product_name }}</td>
+                            <td class="px-6 py-4">
+                                <p class="text-[14px] font-medium text-[#1a1a1a]">{{ $order->product_name }}</p>
+                                @if($order->variant)
+                                    <p class="text-[12px] text-[#666666] mt-1">
+                                        <span class="inline-block px-2 py-0.5 text-[11px] bg-[#f5f5f0] text-[#333333] rounded border border-[#e5e5e5]">Variant: {{ $order->variant }}</span>
+                                    </p>
+                                @endif
+                                @if($order->notes)
+                                    <p class="text-[12px] text-[#888888] italic mt-1 line-clamp-2 max-w-xs" title="{{ $order->notes }}">
+                                        Note: "{{ $order->notes }}"
+                                    </p>
+                                @endif
+                            </td>
                             <td class="px-6 py-4 text-[13px] text-[#666666]">{{ $order->format ?? '—' }}</td>
                             <td class="px-6 py-4 text-[14px] text-[#1a1a1a]">{{ $order->quantity }}</td>
                             <td class="px-6 py-4 text-[14px] text-[#666666]">{{ config('ananniti.payment.currency_symbol', 'Rp') }} {{ number_format($order->price, 0, ',', '.') }}</td>

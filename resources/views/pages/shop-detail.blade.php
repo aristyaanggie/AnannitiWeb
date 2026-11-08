@@ -42,8 +42,9 @@
     activeImage: 0, 
     quantity: 1, 
     customerName: '', 
-    customerCountry: '', 
-    customerPhone: '', 
+    customerAddress: '', 
+    variantChoice: '', 
+    orderNotes: '', 
     images: JSON.parse(document.getElementById('product-images-data').textContent),
     selectedFormat: '{{ $product->sales_format === 'individual' ? 'individual' : 'standard' }}',
     getPrice() {
@@ -146,13 +147,7 @@
           </div>
         </div>
 
-        {{-- Customer Info --}}
-        <div class="space-y-3 mb-6">
-          <input type="text" x-model="customerName" placeholder="Your name" class="w-full px-4 py-2.5 bg-[#fafafa] border border-[#e5e5e5] rounded-lg text-[14px] text-[#1a1a1a] placeholder:text-[#999999] focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200" />
-          <input type="text" x-model="customerCountry" placeholder="Your country" class="w-full px-4 py-2.5 bg-[#fafafa] border border-[#e5e5e5] rounded-lg text-[14px] text-[#1a1a1a] placeholder:text-[#999999] focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200" />
-        </div>
-
-        {{-- WhatsApp CTA --}}
+        {{-- Customer Info & Order Form --}}
         <form action="{{ route('shop.order.store') }}" method="POST" class="w-full" target="_blank">
           @csrf
           <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -161,12 +156,36 @@
           <input type="hidden" name="quantity" :value="quantity">
           <input type="hidden" name="price" :value="getPrice()">
           <input type="hidden" name="customer_name" :value="customerName">
-          <input type="hidden" name="customer_country" :value="customerCountry">
+          <input type="hidden" name="customer_address" :value="customerAddress">
+          <input type="hidden" name="variant" :value="variantChoice">
+          <input type="hidden" name="notes" :value="orderNotes">
+
+          <div class="space-y-3 mb-6">
+            <div>
+              <label class="block text-[13px] font-medium text-[#1a1a1a] mb-1">Full Name <span class="text-red-500">*</span></label>
+              <input type="text" x-model="customerName" placeholder="Your full name" required class="w-full px-4 py-2.5 bg-[#fafafa] border border-[#e5e5e5] rounded-lg text-[14px] text-[#1a1a1a] placeholder:text-[#999999] focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200" />
+            </div>
+
+            <div>
+              <label class="block text-[13px] font-medium text-[#1a1a1a] mb-1">Shipping Address <span class="text-red-500">*</span></label>
+              <textarea x-model="customerAddress" rows="2" placeholder="Full shipping address (street, city, state, postal code)" required class="w-full px-4 py-2.5 bg-[#fafafa] border border-[#e5e5e5] rounded-lg text-[14px] text-[#1a1a1a] placeholder:text-[#999999] focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200 resize-none"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-[13px] font-medium text-[#1a1a1a] mb-1">Color / Variant Choice <span class="text-[#888888] font-normal text-xs">(Optional if applicable)</span></label>
+              <input type="text" x-model="variantChoice" placeholder="e.g. Black, Red, 1oz, etc." class="w-full px-4 py-2.5 bg-[#fafafa] border border-[#e5e5e5] rounded-lg text-[14px] text-[#1a1a1a] placeholder:text-[#999999] focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200" />
+            </div>
+
+            <div>
+              <label class="block text-[13px] font-medium text-[#1a1a1a] mb-1">Additional Notes <span class="text-[#888888] font-normal text-xs">(Optional)</span></label>
+              <textarea x-model="orderNotes" rows="2" placeholder="Special requests or notes for this order..." class="w-full px-4 py-2.5 bg-[#fafafa] border border-[#e5e5e5] rounded-lg text-[14px] text-[#1a1a1a] placeholder:text-[#999999] focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200 resize-none"></textarea>
+            </div>
+          </div>
           
           <div class="flex flex-col sm:flex-row gap-3 mb-8">
             <button type="submit"
-                   :disabled="customerName.trim() === '' || customerCountry.trim() === ''"
-                   :class="(customerName.trim() === '' || customerCountry.trim() === '') ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#1a1a1a] focus:ring-2 focus:ring-black focus:ring-offset-2'"
+                   :disabled="customerName.trim() === '' || customerAddress.trim() === ''"
+                   :class="(customerName.trim() === '' || customerAddress.trim() === '') ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#1a1a1a] focus:ring-2 focus:ring-black focus:ring-offset-2'"
                    class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-black text-white text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
               Ask via WhatsApp

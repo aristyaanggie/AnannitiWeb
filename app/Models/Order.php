@@ -12,11 +12,14 @@ class Order extends Model
         'product_id',
         'product_name',
         'customer_name',
+        'customer_address',
         'customer_country',
         'format',
+        'variant',
         'quantity',
         'price',
         'total_price',
+        'notes',
     ];
 
     public function product()

@@ -100,10 +100,12 @@ class ShopController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'product_name' => 'required|string',
-            'customer_name' => 'required|string',
-            'customer_country' => 'required|string',
-            'format' => 'nullable|string',
+            'product_name' => 'required|string|max:255',
+            'customer_name' => 'required|string|max:255',
+            'customer_address' => 'required|string|max:1000',
+            'variant' => 'nullable|string|max:255',
+            'notes' => 'nullable|string|max:1000',
+            'format' => 'nullable|string|max:100',
             'quantity' => 'required|integer|min:1',
             'price' => 'required|numeric',
         ]);
@@ -118,20 +120,33 @@ class ShopController extends Controller
 
         $currency = config('ananniti.payment.currency_symbol', 'Rp');
         $priceFormatted = number_format((float) $validated['price'], 0, ',', '.');
+        $totalFormatted = number_format((float) $validated['total_price'], 0, ',', '.');
         
         $formatText = $validated['format'] ?? 'Standard';
+        $variantText = !empty($validated['variant']) ? $validated['variant'] : '-';
+        $notesText = !empty($validated['notes']) ? $validated['notes'] : '-';
 
-        $message = "━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT INQUIRY\n\n━━━━━━━━━━━━━━━━━━━━━━\n\nPRODUCT\n" .
-                   "{$validated['product_name']}\n" .
-                   "Format: {$formatText}\n" .
-                   "{$currency} {$priceFormatted}\n" .
-                   "Quantity : {$validated['quantity']}\n\n" .
-                   "━━━━━━━━━━━━━━━━━━━━━━\n\nCUSTOMER\n" .
-                   "Name: {$validated['customer_name']}\n" .
-                   "Country: {$validated['customer_country']}\n\n" .
-                   "━━━━━━━━━━━━━━━━━━━━━━\n\nMESSAGE\n" .
-                   "I would like to ask about availability and shipping for this product.\n\n" .
-                   "━━━━━━━━━━━━━━━━━━━━━━\n\nSent from\nAnanniti Tattoo Bali Website";
+        $divider = "----------------------------------------";
+
+        $message = "{$divider}\n" .
+                   "*ORDER / PRODUCT INQUIRY*\n" .
+                   "{$divider}\n\n" .
+                   "*PRODUCT DETAILS*\n" .
+                   "Product : {$validated['product_name']}\n" .
+                   "Choice / Color : {$variantText}\n" .
+                   "Format : {$formatText}\n" .
+                   "Price : {$currency} {$priceFormatted}\n" .
+                   "Quantity : {$validated['quantity']}\n" .
+                   "Total : {$currency} {$totalFormatted}\n\n" .
+                   "{$divider}\n" .
+                   "*CUSTOMER*\n" .
+                   "Name : {$validated['customer_name']}\n" .
+                   "Address : {$validated['customer_address']}\n\n" .
+                   "{$divider}\n" .
+                   "*NOTES*\n" .
+                   "{$notesText}\n\n" .
+                   "{$divider}\n" .
+                   "Sent from: Ananniti Tattoo Bali Website";
 
         $url = 'https://wa.me/' . $whatsappNumber . '?text=' . rawurlencode($message);
 

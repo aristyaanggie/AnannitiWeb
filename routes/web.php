@@ -41,6 +41,7 @@ Route::middleware('guest')->prefix('admin')->name('admin.')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index']);
 
     // Product Management
     Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');

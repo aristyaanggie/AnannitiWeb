@@ -70,59 +70,52 @@ class BookingController extends Controller
     {
         $serviceLabel = $data['service'] === 'studio' ? 'Studio Tattoo' : 'Home Service';
 
+        $divider = '----------------------------------------';
+
         $lines = [
-            '━━━━━━━━━━━━━━━━━━━━━━',
+            $divider,
+            '*NEW BOOKING REQUEST*',
+            $divider,
             '',
-            'NEW BOOKING REQUEST',
-            '',
-            '━━━━━━━━━━━━━━━━━━━━━━',
-            '',
-            'PERSONAL',
+            '*PERSONAL*',
             'Name : ' . $data['name'],
             'Country : ' . $data['country'],
-            'Phone : ' . ($data['phone'] ?? '—'),
-            'Email : ' . ($data['email'] ?? '—'),
+            'Phone : ' . ($data['phone'] ?? '-'),
+            'Email : ' . ($data['email'] ?? '-'),
             '',
-            '━━━━━━━━━━━━━━━━━━━━━━',
-            '',
-            'SERVICE',
+            $divider,
+            '*SERVICE*',
             $serviceLabel,
             'Tattoo Style : ' . $data['tattoo_style'],
-            'Placement : ' . ($data['placement'] ?? '—'),
-            'Size : ' . ($data['size'] ?? '—'),
+            'Placement : ' . ($data['placement'] ?? '-'),
+            'Size : ' . ($data['size'] ?? '-'),
             'Budget : ' . $data['budget'],
         ];
 
         if ($data['service'] === 'home_service') {
             $lines[] = '';
-            $lines[] = '━━━━━━━━━━━━━━━━━━━━━━';
-            $lines[] = '';
-            $lines[] = 'LOCATION';
-            $lines[] = 'Hotel : ' . ($data['hotel'] ?? '—');
-            $lines[] = 'Address : ' . ($data['address'] ?? '—');
-            $lines[] = 'Maps : ' . ($data['maps'] ?? '—');
+            $lines[] = $divider;
+            $lines[] = '*LOCATION*';
+            $lines[] = 'Hotel : ' . ($data['hotel'] ?? '-');
+            $lines[] = 'Address : ' . ($data['address'] ?? '-');
+            $lines[] = 'Maps : ' . ($data['maps'] ?? '-');
         }
 
         $lines[] = '';
-        $lines[] = '━━━━━━━━━━━━━━━━━━━━━━';
+        $lines[] = $divider;
+        $lines[] = '*DATE*';
+        $lines[] = 'Preferred Date : ' . ($data['preferred_date'] ?? '-');
+        $lines[] = 'Preferred Time : ' . ($data['preferred_time'] ?? '-');
         $lines[] = '';
-        $lines[] = 'DATE';
-        $lines[] = 'Preferred Date : ' . ($data['preferred_date'] ?? '—');
-        $lines[] = 'Preferred Time : ' . ($data['preferred_time'] ?? '—');
+        $lines[] = $divider;
+        $lines[] = '*NOTES*';
+        $lines[] = ($data['notes'] ?? '-');
         $lines[] = '';
-        $lines[] = '━━━━━━━━━━━━━━━━━━━━━━';
-        $lines[] = '';
-        $lines[] = 'NOTES';
-        $lines[] = ($data['notes'] ?? '....');
-        $lines[] = '';
-        $lines[] = '━━━━━━━━━━━━━━━━━━━━━━';
-        $lines[] = '';
+        $lines[] = $divider;
         $lines[] = 'Reference Images : ' . (!empty($data['has_reference']) ? 'YES' : 'NO');
+        $lines[] = $divider;
         $lines[] = '';
-        $lines[] = '━━━━━━━━━━━━━━━━━━━━━━';
-        $lines[] = '';
-        $lines[] = 'Sent from';
-        $lines[] = 'Ananniti Tattoo Bali Website';
+        $lines[] = 'Sent from: Ananniti Tattoo Bali Website';
 
         return implode("\n", $lines);
     }
